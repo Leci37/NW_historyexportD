@@ -1,0 +1,144 @@
+<!-- === Appbar clara, estilo Honeywell === -->
+<header class="appbar border-bottom bg-white">
+  <div class="container-fluid py-2 px-3 d-flex align-items-center gap-3">
+    <img src="./../../../../../assets/images/logo_honeywell.png" alt="Honeywell" height="22" />
+    <div class="appbar-title">Gestión de Históricos EBI</div>
+
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <span class="status-chip"
+            [class.ok]="!isLoading()"
+            [class.busy]="isLoading()">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="text">{{ isLoading() ? 'Cargando…' : 'Listo' }}</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<main class="container-fluid py-4">
+
+  <!-- Acciones -->
+  <div class="card honey-card mb-3">
+    <div class="card-body pb-2">
+      <div class="d-flex flex-wrap align-items-center gap-2 honey-toolbar">
+
+        <button class="btn btn-primary"
+                [disabled]="!hasChanges() || isSaving()"
+                (click)="onSave()">
+          <span *ngIf="isSaving()" class="spinner-border spinner-border-sm me-2"></span>
+          Guardar cambios
+        </button>
+
+        <button class="btn btn-outline-success"
+                [disabled]="isLoading() || data().length === 0"
+                (click)="onExportExcel()">
+          Exportar Excel
+        </button>
+
+        <button class="btn btn-outline-danger"
+                [disabled]="isLoading() || data().length === 0"
+                (click)="onExportPdf()">
+          Exportar PDF
+        </button>
+
+        <div class="ms-auto d-flex align-items-center flex-wrap gap-2">
+          <span class="metric-chip">
+            Filas <span class="val">{{ data().length }}</span>
+          </span>
+
+          <span class="metric-chip" *ngIf="lastResponse()">
+            OK <span class="val">{{ lastResponse()!.updatedCount }}</span>
+          </span>
+
+          <span class="metric-chip warn" *ngIf="lastResponse()">
+            Fallos <span class="val">{{ lastResponse()!.failedCount }}</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Mensajes -->
+      <div *ngIf="lastError()" class="alert alert-danger py-2 mt-3 mb-0">
+        {{ lastError() }}
+      </div>
+
+      <div *ngIf="!lastError() && lastResponse()" class="alert alert-secondary py-2 mt-3 mb-0">
+        Procesados: {{ lastResponse()!.processedCount }} ·
+        Actualizados: {{ lastResponse()!.updatedCount }} ·
+        Fallidos: {{ lastResponse()!.failedCount }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="card honey-card">
+    <div class="card-body p-0">
+      <div class="table-responsive" style="max-height: calc(100vh - 320px);">
+        <table class="table table-hover table-striped table-sm align-middle honey-table mb-0">
+          <thead class="table-light sticky-top">
+            <tr>
+              <th class="text-nowrap">Id</th>
+              <th class="text-nowrap">Punto</th>
+              <th class="text-nowrap">Parámetro</th>
+              <th style="min-width: 260px;">Descripción</th>
+              <th style="min-width: 220px;">Dispositivo</th>
+              <th class="text-nowrap text-center">Arch. Rápida</th>
+              <th class="text-nowrap text-center">Arch. Lenta</th>
+              <th class="text-nowrap text-center">Arch. Extendida</th>
+              <th class="text-end"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let p of data(); trackBy: trackByPointId">
+              <td class="text-muted">{{ p.pointId }}</td>
+              <td class="fw-semibold">{{ p.pointName }}</td>
+              <td class="text-muted">{{ p.paramName }}</td>
+
+              <td>
+                <input class="form-control form-control-sm"
+                       [value]="p.description || ''"
+                       (blur)="onEditText(p.pointId, 'description', $any($event.target).value)"
+                       placeholder="Descripción" />
+              </td>
+
+              <td>
+                <input class="form-control form-control-sm"
+                       [value]="p.device || ''"
+                       (blur)="onEditText(p.pointId, 'device', $any($event.target).value)"
+                       placeholder="Dispositivo" />
+              </td>
+
+              <td class="text-center honey-muted-check">
+                <input class="form-check-input lg" type="checkbox"
+                       [checked]="!!p.historyFastArch"
+                       (change)="onEditBool(p.pointId, 'historyFastArch', $any($event.target).checked)"
+                       [disabled]="!p.historyFast" />
+              </td>
+
+              <td class="text-center honey-muted-check">
+                <input class="form-check-input lg" type="checkbox"
+                       [checked]="!!p.historySlowArch"
+                       (change)="onEditBool(p.pointId, 'historySlowArch', $any($event.target).checked)"
+                       [disabled]="!p.historySlow" />
+              </td>
+
+              <td class="text-center honey-muted-check">
+                <input class="form-check-input lg" type="checkbox"
+                       [checked]="!!p.historyExtdArch"
+                       (change)="onEditBool(p.pointId, 'historyExtdArch', $any($event.target).checked)"
+                       [disabled]="!p.historyExtd" />
+              </td>
+
+              <td class="text-end">
+                <button class="btn btn-link btn-sm text-secondary px-1" (click)="onRevert(p.pointId)">
+                  Revertir
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>

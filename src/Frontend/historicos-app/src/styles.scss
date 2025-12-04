@@ -1,0 +1,134 @@
+/* ========= Honeywell Theme ========= */
+
+/* Carga Bootstrap (Sass → CSS) */
+@use "bootstrap/scss/bootstrap";
+
+/* ======= 1. Tema base con variables CSS ======= */
+:root {
+  --bs-primary: #E4002B;
+  --bs-primary-rgb: 228, 0, 43;
+  --bs-secondary: #4D4F53;
+
+  --bs-body-bg: #f6f7f9;
+  --bs-body-color: #16181b;
+
+  --bs-border-radius: .6rem;
+  --bs-border-radius-sm: .6rem;
+  --bs-border-radius-lg: .9rem;
+  --bs-card-border-radius: .9rem;
+  --bs-btn-border-radius: .6rem;
+  --bs-input-border-radius: .5rem;
+
+  --bs-table-striped-bg: #fafafa;
+  --bs-focus-ring-color: rgba(var(--bs-primary-rgb), .25);
+}
+
+/* ======= 2. Botones Honeywell ======= */
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--bs-primary);
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: color-mix(in oklab, var(--bs-primary), black 10%);
+  --bs-btn-hover-border-color: color-mix(in oklab, var(--bs-primary), black 12%);
+  --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+  --bs-btn-active-bg: color-mix(in oklab, var(--bs-primary), black 15%);
+  --bs-btn-active-border-color: color-mix(in oklab, var(--bs-primary), black 20%);
+}
+
+/* Estado deshabilitado */
+.btn-primary:disabled,
+.btn-primary.disabled,
+fieldset:disabled .btn-primary {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  color: #fff;
+  opacity: .65;
+}
+
+/* Toggles y button-groups */
+.btn-check:checked + .btn-primary,
+.btn-check:active + .btn-primary,
+.btn-primary:active,
+.btn-primary.active,
+.show > .btn-primary.dropdown-toggle {
+  background-color: color-mix(in oklab, var(--bs-primary), black 15%);
+  border-color: color-mix(in oklab, var(--bs-primary), black 20%);
+  color: #fff;
+}
+
+/* Outline variant */
+.btn-outline-primary {
+  --bs-btn-color: var(--bs-primary);
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-hover-bg: var(--bs-primary);
+  --bs-btn-hover-border-color: var(--bs-primary);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+}
+
+/* ======= 3. Utilidades coherentes ======= */
+.bg-primary {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+}
+.text-primary { color: var(--bs-primary) !important; }
+.border-primary { border-color: var(--bs-primary) !important; }
+
+/* ======= 4. UI interna (layout y tablas) ======= */
+.appbar {
+  position: sticky; top: 0; z-index: 1030;
+  backdrop-filter: saturate(180%) blur(6px);
+  box-shadow: 0 1px 0 rgba(22,24,27,.06);
+  background: #fff;
+  .appbar-title { font-weight: 600; letter-spacing: .2px; }
+}
+
+.status-chip {
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.25rem .6rem; border-radius:999px; font-size:.82rem;
+  border: 1px solid rgba(22,24,27,.08); background:#fff; color:#3a3f45;
+  .dot { width:.5rem; height:.5rem; border-radius:50%; background:#adb5bd; }
+  &.ok .dot { background:#30a46c; }
+  &.busy .dot { background:#eab308; animation: flicker 1s infinite; }
+}
+@keyframes flicker { 0%,100% {opacity:.6;} 50% {opacity:1;} }
+
+.honey-card {
+  border: 1px solid rgba(22,24,27,.08);
+  box-shadow: 0 4px 14px rgba(22,24,27,.06);
+  background: #fff;
+  border-radius: var(--bs-card-border-radius);
+}
+
+.honey-toolbar .btn { min-width: 132px; }
+
+.metric-chip {
+  --bg:#f4f6f8; --bd:rgba(22,24,27,.1); --fg:#2b2f34;
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.25rem .6rem; border-radius:999px; font-size:.8rem;
+  background:var(--bg); color:var(--fg); border:1px solid var(--bd);
+  .val {
+    background:#fff; border:1px solid var(--bd);
+    padding:.1rem .45rem; border-radius:.75rem; font-weight:600;
+  }
+  &.warn { --bg:#fff3f3; --bd:#ffd6d6; --fg:#b42318; }
+}
+
+.honey-table {
+  thead th { position: sticky; top: 0; z-index: 2; }
+  tbody tr:hover { background-color: #fffefe; }
+  td, th { vertical-align: middle; }
+}
+
+.form-check-input.lg { width:1.1rem; height:1.1rem; cursor:pointer; }
+
+.form-control.form-control-sm {
+  transition: box-shadow .15s ease, border-color .15s ease;
+  &:focus {
+    box-shadow: 0 0 0 .18rem var(--bs-focus-ring-color);
+    border-color: color-mix(in oklab, var(--bs-primary), black 65%);
+  }
+}
+
+.alert { border-radius:.75rem; }

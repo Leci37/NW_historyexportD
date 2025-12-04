@@ -1,0 +1,66 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "AppDbContext",
+   "ContextNamespace": "HistoryExport_EBI.Infrastructure.Persistence",
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "MinimumProductVersion": "2.6.1186",
+   "ModelNamespace": "HistoryExport_EBI.Domain.Entities",
+   "OutputContextPath": "Persistence",
+   "OutputPath": "HistoryExport_EBI.Domain\/Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "HistoryExport_EBI.Infrastructure.Persistence",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[History_1hour]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[History_1min]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[History_5sec]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Parameter]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Point]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": true,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": true,
+   "UseManyToManyEntity": true,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": true,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false
+}
