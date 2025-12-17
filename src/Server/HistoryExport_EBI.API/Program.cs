@@ -1,5 +1,7 @@
 using HistoryExport_EBI.Application;
 using HistoryExport_EBI.Infrastructure;
+using HistoryExport_EBI.Infrastructure.Persistence;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +34,29 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 Log.Information("🚀 [STARTUP] Starting History Export API...");
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    try
+    {
+        var canConnect = await db.Database.CanConnectAsync();
+
+        if (canConnect)
+        {
+            Log.Information("🔌 [DATABASE] Connected to PointsHistory successfully.");
+        }
+        else
+        {
+            Log.Warning("⚠️ [DATABASE] Unable to connect to PointsHistory database.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Log.Error(ex, "❌ [DATABASE] Error while connecting to PointsHistory.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
